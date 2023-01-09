@@ -5,20 +5,52 @@
 <title>安徽师范大学附属小学2016级603班开源相册</title>
 </head>
 <body>
- 
+    <style>
+        p
+        {
+            color:black;
+            /*颜色黑*/
+            text-align:left;
+            /*字居左*/
+        } 
+        h1
+        {
+            color:goldenrod;
+            /*颜色深黄*/
+            text-align: center;
+        }
+        a:link {color:#000000;}      /* 未访问链接*/
+        a:visited {color:#00F000;}  /* 已访问链接 */
+        a:hover {color:#0000FF;}  /* 鼠标移动到链接上 */
+        a:active {color:#0000FF;}  /* 鼠标点击时 */
+    </style>
 <h1>安徽师范大学附属小学2016级603班开源相册</h1>
  
 <p>寄情端午
-    <a href="img/寄情端午">Click To Run </a>
+    <a href="img/寄情端午/jqdw.html">Click To Run </a>
 </p>
-
+<hr>
 <p>六年级六一游园
-    <a href="img/六年级六一游园">Click To Run </a>
+    <a href="img/六年级六一游园/lnjlyyy.html">Click To Run </a>
 </p>
-
+<hr>
 <p>我们毕业了
-    <a href="img/我们毕业了">Click To Run </a>
+    <a href="img/我们毕业了/wmbyl.html">Click To Run </a>
 </p>
+<hr>
+<h2>Windows帮附属Twikoo评论系统</h2>
+<h3>Comment</h3>
+<div id="tcomment"></div>
+<script src="https://cdn.staticfile.org/twikoo/1.6.8/twikoo.all.min.js"></script>
+<script>
+twikoo.init({
+  envId: 'https://twikoo.windowsbang.cn', // 腾讯云环境填 envId；Vercel 环境填地址（https://twikoo.windowsbang.cn）
+  el: '#tcomment', // 容器元素
+   region: '', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+  // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+   lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/imaegoo/twikoo/blob/main/src/client/utils/i18n/index.js
+})
+</script>
  
 </body>
 </html>
