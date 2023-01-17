@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--
     作者：LeeGene
@@ -6,19 +7,149 @@
 	<head>
 		<meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=0">
-		<title>查询</title>
+		<title>中转页</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			img{
+				font-size: 0;
+			}
+			#arrow{
+				display: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				transition: transform 2s ease-in-out;
+				-webkit-transition: transform 2s ease-in-out;
+				-moz-transition: transform 2s ease-in-out;
+			}
+			.about{
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				display: inline-block;
+				text-align: center;
+				line-height: 25px;
+				background-color: rgba(0,0,0,.5);
+				border-radius: 50%;
+				float: right;
+				color: white;
+				top: 15px;
+				right: 15px;
+				cursor: pointer;
+			}
+			.container{
+				height: 500px;
+				margin: auto;
+				text-align: center;
+			}
+			.title{
+				text-align: center;
+				padding-top: 100px;
+				margin-bottom: 20px;
+			}
+			.baidu{
+				height: 100px;
+				margin-bottom: -20px;
+			}
+			#search{
+				width: 537px;
+				height: 40px;
+				padding: 9px 7px;
+				outline: 0;
+				border: 1px solid #d8d8d8;
+				vertical-align: top;
+				font-size: 16px;
+			}
+			.button{
+				width: 102px;
+				height: 40px;
+				background-color: #38f;
+				border: 0;
+				padding: 0;
+				color: white;
+				cursor: pointer;
+				margin-left: -10px;
+			}
+			#instrcutions{
+				color: #999;
+				margin-top: 70px;
+				font-size: 1.1em;
+				margin-bottom: 40px;
+			}
+			#url{
+				width: 300px;
+				height: 40px;
+				margin-bottom: 20px;
+				outline: 0;
+				border: 1px solid #D8D8D8;
+				font-size: 20px;
+			}
+			#link{
+				display: none;
+			}
+			@media screen and (max-width:668px) {
+				.container{
+					padding: 15px;
+				}
+				.title{
+					font-size: 1em;
+					font-weight: normal;
+				}
+				.baidu{
+					height: 50px;
+					margin-bottom: -8px;
+				}
+				.search-container{
+					width: 100%;
+				}
+				#search{
+					width: calc(100% - 102px);
+				}
+			}
+		</style>
+	</head>
 	<body>
+		<span class="about">?</span>
 		<div class="container">
+			<h1 class="title">请输入密码</h1>
 			<span class="search-container">
 				<input type="text" id="search" />
-				<input type="button" id="get" class="button" value="查询图片" />
+				<input type="button" id="get" class="button" value="查询" />
 			</span>
-			<div id="instrcutions">输入你的密码，然后按查询图片</div>
+			<div id="instrcutions">输入一个密码（带后缀名），然后按查询</div>
 			<div id="link">
 				<input type="text" readonly="readonly" id="url" />
+				<div>
+					<input style="margin: 0 10px;" type="button" class="button" id="copy" value="复制" />
+					<input style="margin: 0 10px;" type="button" class="button" id="skip" value="预览" />
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
+			// 获取链接并显示在网页上
+			function getLink(){
+				document.getElementById('link').style.display = "block";
+				var value = document.getElementById('search').value;
+				var base_url = location.href;
+				url = base_url + "?" + value;
+				document.getElementById('url').value = url;
+				document.getElementById('url').select();
+				document.getElementById('instrcutions').innerText = "复制下面的地址,然后发给伸手党吧！";
+			}
+			// 将链接自动拷贝到剪切板中
+			function copyLink(){
+				document.execCommand('copy');
+			}
 			// 跳转网页到所生成的链接上
 			function skipLink(){
 				location.href = url;
@@ -32,9 +163,21 @@
 			// 自动执行
 			(function(window){
 				var variable = getVariable();	// 获取网页链接的get参数
+				// 实现点击"百度一下"按钮就获取链接并显示在网页上
+				document.getElementById('get').addEventListener('click',function(){
+					getLink();
+				});
+				// 实现点击"复制"按钮就将生成的链接复制到剪切板上
+				document.getElementById('copy').addEventListener('click',function(){
+					copyLink();
+				});
 				// 实现点击"预览"按钮就跳转到生成的链接上
 				document.getElementById('skip').addEventListener('click',function(){
 					skipLink();
+				});
+				// 实现点击"?"文本就弹出提示声明
+				document.getElementsByClassName('about')[0].addEventListener('click',function(){
+					alert('*山外青山楼外楼，唱跳rap打篮球。');
 				});
 				if(variable){	// 判断有没有get传递的参数,有就进入动画效果,没有就保持不变
 					var arrow = document.getElementById('arrow');
@@ -52,16 +195,19 @@
 							var variable = decodeURIComponent(getVariable());
 							var index = 0;	// 给与一个下标号
 							arrow.style.display = "none";
-							instrcutions.innerText = "2、输入你的密码";	// 鼠标进行第二层动画的提示语
+							instrcutions.innerText = "2、输入你的密码（带后缀名）";	// 鼠标进行第二层动画的提示语
 							var a = setInterval(function(){	// 文字一一输入的特效
 								if(index == variable.length){	// 判断输出字符串是否到达极限,并且鼠标进行第三层动画
 									clearInterval(a);	// 到达极限删除自身,避免死循环浪费内存
-									instrcutions.innerText = "3、按下“查询图片”按钮";	// 鼠标进行第三层动画的提示语
+									instrcutions.innerText = "3、按下“查询”按钮";	// 鼠标进行第三层动画的提示语
 									arrow.style.display = "block";
 									var get = document.getElementById('get');
-									var get_offsetX = get.offsetLeft + 51;	//获取"查询图片"按钮的X轴位置
-									var get_offsetY = get.offsetTop + 20;	//获取"查询图片"按钮的Y轴位置
+									var get_offsetX = get.offsetLeft + 51;	//获取"百度一下"按钮的X轴位置
+									var get_offsetY = get.offsetTop + 20;	//获取"百度一下"按钮的Y轴位置
 									arrow.style.transform = "translate("+ get_offsetX +"px," + get_offsetY + "px)";
+									setTimeout(function(){
+										instrcutions.innerText = "结束";		// 第三层动画结束语
+									},2000);
 									setTimeout(function(){
 										location.href = "https://picturebed.netlify.app/img/私人/" + variable;	// 自动跳转到百度搜索界面
 									},3000);
